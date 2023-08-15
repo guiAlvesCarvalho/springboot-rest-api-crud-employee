@@ -7,35 +7,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class DemoSecurityConfig {
 
+    // adicionando suporte aos users via JDBC
+
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
+    public UserDetailsManager userDetailsManager(DataSource dataSource){
 
-        UserDetails user1 = User.builder()
-                .username("user1")
-                .password("{noop}test123")
-                .roles("EMPLOYEE")
-                .build();
-
-        UserDetails user2 = User.builder()
-                .username("user2")
-                .password("{noop}test123")
-                .roles("EMPLOYEE", "MANAGER")
-                .build();
-
-        UserDetails user3 = User.builder()
-                .username("user3")
-                .password("{noop}test123")
-                .roles("EMPLOYEE", "MANAGER", "ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user1, user2, user3);
-
-        // Com esta config o SpringSecurity não utilizará a senha do application.properties
+        return new JdbcUserDetailsManager(dataSource);
     }
 
     @Bean
@@ -61,4 +47,32 @@ public class DemoSecurityConfig {
         return http.build();
 
     }
+
+    /*
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager() {
+
+        UserDetails user1 = User.builder()
+                .username("user1")
+                .password("{noop}test123")
+                .roles("EMPLOYEE")
+                .build();
+
+        UserDetails user2 = User.builder()
+                .username("user2")
+                .password("{noop}test123")
+                .roles("EMPLOYEE", "MANAGER")
+                .build();
+
+        UserDetails user3 = User.builder()
+                .username("user3")
+                .password("{noop}test123")
+                .roles("EMPLOYEE", "MANAGER", "ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(user1, user2, user3);
+
+        // Com esta config o SpringSecurity não utilizará a senha do application.properties
+    }
+ */
 }
