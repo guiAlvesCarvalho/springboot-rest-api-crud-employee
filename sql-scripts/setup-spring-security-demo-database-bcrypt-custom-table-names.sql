@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS `roles`;
 DROP TABLE IF EXISTS `members`;
 
 --
--- Table structure for table `members`
+-- Estrutura da tabela `members`
 --
 
 CREATE TABLE `members` (
@@ -15,24 +15,24 @@ CREATE TABLE `members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Inserting data for table `members`
+-- Inserindo dados na tabela `members`
 --
--- NOTE: The passwords are encrypted using BCrypt
+-- NOTA: As senhas são encriptadas usando o BCrypt
 --
--- A generation tool is avail at: https://www.luv2code.com/generate-bcrypt-password
+-- Gerador de Bcrypt: https://www.bcryptcalculator.com/
 --
--- Default passwords here are: fun123
+-- A senha padrão é: fun123
 --
 
 INSERT INTO `members`
 VALUES
-('john','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
-('mary','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
-('susan','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1);
+('user1','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
+('user2','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1),
+('user3','{bcrypt}$2a$10$qeS0HEh7urweMojsnwNAR.vcXJeXR1UcMRZ2WcGQl9YeuspUdgF.q',1);
 
 
 --
--- Table structure for table `authorities`
+-- Estrutura da tabela `authorities`
 --
 
 CREATE TABLE `roles` (
@@ -43,14 +43,14 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Inserting data for table `roles`
+-- Inserindo dados na tabela `roles`
 --
 
 INSERT INTO `roles`
 VALUES
-('john','ROLE_EMPLOYEE'),
-('mary','ROLE_EMPLOYEE'),
-('mary','ROLE_MANAGER'),
-('susan','ROLE_EMPLOYEE'),
-('susan','ROLE_MANAGER'),
-('susan','ROLE_ADMIN');
+('user1','ROLE_EMPLOYEE'),
+('user2','ROLE_EMPLOYEE'),
+('user2','ROLE_MANAGER'),
+('user3','ROLE_EMPLOYEE'),
+('user3','ROLE_MANAGER'),
+('user3','ROLE_ADMIN');

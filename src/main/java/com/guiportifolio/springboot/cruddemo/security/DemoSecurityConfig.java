@@ -4,9 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -16,12 +13,24 @@ import javax.sql.DataSource;
 @Configuration
 public class DemoSecurityConfig {
 
-    // adicionando suporte aos users via JDBC
 
+    // adicionando suporte aos users via JDBC - TABELAS CUSTOM
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
 
-        return new JdbcUserDetailsManager(dataSource);
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+
+        // query user by username
+        jdbcUserDetailsManager.setUsersByUsernameQuery(
+                "select user_id, pw, active from members where user_id=?");
+
+
+        // query authorities/roles by username
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
+                "select user_id, role from roles where user_id=?");
+
+
+        return jdbcUserDetailsManager;
     }
 
     @Bean
@@ -34,8 +43,7 @@ public class DemoSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.DELETE, "/api/employees").hasRole("ADMIN")
-                );
-
+        );
         // user HTTP Basic auth
         http.httpBasic();
 
@@ -44,11 +52,26 @@ public class DemoSecurityConfig {
 
         http.csrf().disable();
 
-        return http.build();
 
+        return http.build();
     }
 
-    /*
+/*
+    // adicionando suporte aos users via JDBC - TABELAS PADRÃO SPRING SECUTIRY
+    // Tabela users -> "username", "password", "enabled"
+    // Tabela authorities -> "username", "authority"
+
+    @Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource){
+
+        return new JdbcUserDetailsManager(dataSource);
+    }
+*/
+
+
+
+/*
+    // Usuários salvos em memória, no próprio código java
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
 
