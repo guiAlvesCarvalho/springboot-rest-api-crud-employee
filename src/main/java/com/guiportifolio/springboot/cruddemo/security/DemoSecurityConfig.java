@@ -40,9 +40,12 @@ public class DemoSecurityConfig {
                 configurer
                         .requestMatchers(HttpMethod.GET, "/api/employees").hasRole("EMPLOYEE")
                         .requestMatchers(HttpMethod.GET, "/api/employees/**").hasRole("EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/employees/list").hasRole("EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PUT, "/api/employees").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.POST, "/api/employees").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/employees/list").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.DELETE, "/api/employees").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/employees/list").hasRole("ADMIN")
         );
         // user HTTP Basic auth
         http.httpBasic();

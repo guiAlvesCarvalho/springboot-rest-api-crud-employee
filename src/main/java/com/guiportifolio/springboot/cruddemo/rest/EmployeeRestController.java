@@ -3,12 +3,14 @@ package com.guiportifolio.springboot.cruddemo.rest;
 import com.guiportifolio.springboot.cruddemo.entity.Employee;
 import com.guiportifolio.springboot.cruddemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class EmployeeRestController {
 
     private EmployeeService employeeService;
@@ -19,13 +21,13 @@ public class EmployeeRestController {
     }
 
     // buscar(GET) "/employess" e retornar uma lista de todos os empregados
-    @GetMapping("/employees")
+    @GetMapping("/api/employees")
     public List<Employee> findAll() {
         return employeeService.findAll();
     }
 
     // buscar(GET) "/employees/{employeeId}" e retornar um empregado específico por id
-    @GetMapping("/employees/{employeeId}")
+    @GetMapping("/api/employees/{employeeId}")
     public Employee getEmployee(@PathVariable int employeeId) {
 
         Employee theEmployee = employeeService.findById(employeeId);
@@ -38,7 +40,7 @@ public class EmployeeRestController {
     }
 
     // enviar(POST) "/employees" - adicionar um novo empregado
-    @PostMapping("/employees")
+    @PostMapping("/api/employees")
     public Employee addEmployee(@RequestBody Employee theEmployee) {
 
         // caso passem um valor no id via JSON - atribuir id == 0
@@ -52,7 +54,7 @@ public class EmployeeRestController {
     }
 
     // atualizar(PUT) "/employees" - atualizar os dados de algum empregado
-    @PutMapping("/employees")
+    @PutMapping("/api/employees")
     public Employee updateEmployee(@RequestBody Employee theEmployee) {
 
         Employee dbEmployee = employeeService.save(theEmployee);
@@ -61,7 +63,7 @@ public class EmployeeRestController {
     }
 
     // deletar(DELETE) "/employees/{employeeId}"
-    @DeleteMapping("/employees/{employeeId}")
+    @DeleteMapping("/api/employees/{employeeId}")
     public String deleteEmployee(@PathVariable int employeeId) {
 
         Employee tempEmployee = employeeService.findById(employeeId);
