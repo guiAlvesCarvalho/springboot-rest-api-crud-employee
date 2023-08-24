@@ -19,12 +19,20 @@
 	<h3>Lista de Funcionários</h3>
 	<hr>
 
+	<!-- Adicionar botão -->
+	<a th:href="@{/employees/showFormForAdd}"
+		class="btn btn-primary btn-sm mb-3">
+		Adicionar Funcionário
+	</a>
+
+
 	<table class="table table-bordered table-striped">
 		<thead class="table-dark">
 			<tr>
 				<th>Nome</th>
 				<th>Sobrenome</th>
 				<th>Email</th>
+				<th>Ação</th>
 			</tr>
 		</thead>
 		
@@ -33,8 +41,19 @@
 			
 				<td th:text="${tempEmployee.firstName}" />	
 				<td th:text="${tempEmployee.lastName}" />	
-				<td th:text="${tempEmployee.email}" />	
-				
+				<td th:text="${tempEmployee.email}" />
+				<td>
+					<a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+						class="btn btn-info btn-sm">
+						Atualizar
+					</a>
+					<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+						class="btn btn-danger btn-sm"
+						onclick="if (!(confirm('Tem certeza que deseja excluir este funcionário?'))) return false">
+						Deletar
+					</a>
+				</td>
+
 			</tr>
 		</tbody>		
 	</table>
