@@ -1,4 +1,4 @@
-package com.guiportifolio.springboot.cruddemo.rest;
+package com.guiportifolio.springboot.cruddemo.restController;
 
 import com.guiportifolio.springboot.cruddemo.entity.Employee;
 import com.guiportifolio.springboot.cruddemo.service.EmployeeService;
@@ -71,8 +71,6 @@ public class EmployeeRestController {
         }
 
         employeeService.deleteById(employeeId);
-
         return "Deleted employee id: " + employeeId;
-
     }
 }
